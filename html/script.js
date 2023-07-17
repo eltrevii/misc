@@ -1,4 +1,4 @@
-/*$(window).on("load", function(){
+$(window).on("load", function(){
     //$("body").css("background-color", "black")
     document.getElementById('video').addEventListener('ended',myHandler,false);
     function myHandler(e) {
@@ -12,13 +12,8 @@
             hide()
         }
 });
-*/
+
 hide = function() {
     document.getElementById("loader").style.display = "none";
     document.getElementById("page").style.display = "block";
-}
-
-window.onload = function () {
-    hide()
-    $("#intro").fadeOut()
 }
