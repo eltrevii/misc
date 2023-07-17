@@ -7,6 +7,7 @@ body {
     font-family: 'Product Sans';
     background-color: #202020;
     color: lightgray;
+    font-size: calc(0.43em + 1vh);
 }
 
 .footer {
