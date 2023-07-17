@@ -2,7 +2,7 @@ $(window).on("load", function(){
     var img = new Image();
     img.src = "https://source.unsplash.com/random/3840x2160";
     img.onload = function() {
-        $("body").css("background", "linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), url(" + img.src + ")")
+        $("body").css("background", "linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(" + img.src + ")")
         hide()
     }
 });
