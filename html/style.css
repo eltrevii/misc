@@ -7,8 +7,11 @@ body {
     font-family: 'Product Sans';
     background-color: #202020;
     color: lightgray;
-    font-size: calc(0.43em + 1vh);
     transition: background-image 300ms;
+}
+
+body, label {
+    font-size: calc(0.43em + 1vh);
 }
 
 .footer {
@@ -31,10 +34,10 @@ body {
 .container {
     display: block;
     position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
+    padding-left: calc(35px + 0.75vh);
+    margin-bottom: calc(12px + 0.75vh);
     cursor: pointer;
-    font-size: 22px;
+    font-size: calc(22px + 0.75vh);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -51,11 +54,11 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    height: 25px;
-    width: 25px;
+    height: calc(25px + 1vh);
+    width: calc(25px + 1vh);
     background-color: #eee;
     border-radius: 50%;
-    transition: linear 300ms
+    transition: linear 300ms;
 }
 
 .container:hover input ~ .radio {
@@ -77,10 +80,10 @@ body {
 }
 
 .container .radio:after {
-    top: 7px;
-    left: 7px;
-    width: 11px;
-    height: 11px;
+    top: calc(7px + 0.25vh);
+    left: calc(7px + 0.25vh);
+    width: calc(11px + 0.5vh);
+    height: calc(11px + 0.5vh);
     border-radius: 50%;
     background: white;
 }
