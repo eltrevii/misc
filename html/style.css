@@ -3,6 +3,9 @@ body {
     font-family: 'Product Sans';
     background-color: #202020;
     color: lightgray;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
 }
 
 .container {
@@ -32,11 +35,11 @@ body {
     width: 25px;
     background-color: #eee;
     border-radius: 50%;
+    transition: linear 300ms
 }
 
 .container:hover input ~ .radio {
     background-color: #ccc;
-    transition: 300ms;
 }
 
 .container input:checked ~ .radio {
@@ -60,4 +63,32 @@ body {
     height: 11px;
     border-radius: 50%;
     background: white;
+}
+
+/* _loader_ */
+
+#loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #444;
+    border-radius: 50%;
+    border-top: 16px solid red;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    transition: 300ms;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

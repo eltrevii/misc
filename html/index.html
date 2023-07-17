@@ -3,34 +3,44 @@
     <head>
         <title>El Trevi</title>
         <link rel="icon" type="image/x-icon" href="https://eltrevii.github.io/favicon.ico">
-        <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="gfonts.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+        <script src="waitforimages.js"></script>
+        <script src="script.js"></script>
+
     </head>
 
     <body>
-        <h1>
-            <p>Hola.</p>    
-        </h1>
-        <h2>
-            <p>¿Qué tal?</p>
-        </h2>
-        <h3>
-            <p>Esto es una prueba de qué tan lejos puedo llegar programando
-                una página simple con HTML y CSS (y JS si es necesario)</p>
-        </h3>
-        <label class="container">a
-            <input type="radio" name="radio" checked>
-            <span class="radio"></span>
-        </label>
-
-        <label class="container">b
-            <input type="radio" name="radio">
-            <span class="radio"></span>
-        </label>
-
-        <label class="container">c
-            <input type="radio" name="radio">
-            <span class="radio"></span>
-        </label>
+        <div id="loader"></div>
+        <div id="page" style="display: none">
+            <h1>
+                <p>Hola.</p>    
+            </h1>
+    
+            <h2>
+                <p>¿Qué tal?</p>
+            </h2>
+    
+            <h3>
+                <p>Esto es una prueba de qué tan lejos puedo llegar programando
+                    una página simple con HTML y CSS (y JS si es necesario)</p>
+            </h3>
+    
+            <label class="container">a
+                <input type="radio" name="radio" checked>
+                <span class="radio"></span>
+            </label>
+    
+            <label class="container">b
+                <input type="radio" name="radio">
+                <span class="radio"></span>
+            </label>
+    
+            <label class="container">c
+                <input type="radio" name="radio">
+                <span class="radio"></span>
+            </label>
+        </div>
     </body>
 </html>
