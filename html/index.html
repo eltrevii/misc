@@ -16,7 +16,9 @@
                 <source src="intro.mp4" type="video/mp4">
             </video>
         </div>
-        <div id="loader"></div>
+        <div id="loader-parent">
+            <div id="loader"></div>
+        </div>
         <div id="page" style="display: none">
             <h1>
                 <p>Hola.</p>    
@@ -27,29 +29,34 @@
             </h2>
     
             <h3>
-                <p>Esto es una prueba para ver qué tan lejos puedo llegar
+                <p>
+                    Esto es una prueba para ver qué tan lejos puedo llegar
                     programando una página simple con HTML y CSS (y JS si
-                    es necesario).</p>
-                <p>Todavía no he terminado. Además, tengo otros proyectos,
-                    y también juego.</p>
-                <p>Por cierto, el círculo de carga que (probablemente) acabas
-                    de ver se muestra mientras se carga la imagen (aleatoria,
-                    de hecho) de fondo. Me ha
-                    costado, pero al final lo he conseguido.</p>
+                    es necesario).
+                </p>
+                <p>
+                    Todavía no he terminado. Además, tengo otros proyectos,
+                    y también juego.
+                </p>
+                <p>
+                    Por cierto, el círculo de carga que (probablemente) acabas
+                    de ver se muestra mientras se carga las imágenes (aleatorias,
+                    de hecho) de fondo. Me ha costado, pero al final lo he
+                    conseguido.</p>
             </h3>
     
-            <label class="container">a
-                <input type="radio" name="radio" checked>
+            <label class="container">Imagen 1
+                <input type="radio" class="radio1" name="radio1" value="1" checked>
                 <span class="radio"></span>
             </label>
     
-            <label class="container">b
-                <input type="radio" name="radio">
+            <label class="container">Imagen 2
+                <input type="radio" class="radio1" name="radio1" value="2">
                 <span class="radio"></span>
             </label>
     
-            <label class="container">c
-                <input type="radio" name="radio">
+            <label class="container">Imagen 3
+                <input type="radio" class="radio1" name="radio1" value="3">
                 <span class="radio"></span>
             </label>
 
