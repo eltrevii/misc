@@ -38,5 +38,6 @@ hide = function() {
 }
 
 img_sel = function(img) {
-    $("body").css("background", "linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(" + imgArr[img].src + ")")
+    $("body").css("background", "linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(" + imgArr[img].src + ") no-repeat center center fixed")
+    $("body").css("background-size", "cover")
 }

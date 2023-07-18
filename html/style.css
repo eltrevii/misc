@@ -10,10 +10,6 @@ body {
     transition: background-image 300ms;
 }
 
-body, label {
-    font-size: calc(0.43em + 1vh);
-}
-
 .footer {
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
@@ -34,10 +30,10 @@ body, label {
 .container {
     display: block;
     position: relative;
-    padding-left: calc(35px + 0.75vh);
-    margin-bottom: calc(12px + 0.75vh);
+    padding-left: 35px;
+    margin-bottom: 12px;
     cursor: pointer;
-    font-size: calc(22px + 0.75vh);
+    font-size: 22px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -54,8 +50,8 @@ body, label {
     position: absolute;
     top: 0;
     left: 0;
-    height: calc(20px + 1vh);
-    width: calc(20px + 1vh);
+    height: 25px;
+    width: 25px;
     background-color: #eee;
     border-radius: 50%;
     transition: linear 300ms;
@@ -80,10 +76,10 @@ body, label {
 }
 
 .container .radio:after {
-    top: calc(5px + 0.3vh);
-    left: calc(5px + 0.3vh);
-    width: calc(9px + 0.5vh);
-    height: calc(9px + 0.5vh);
+    top: 7px;
+    left: 7px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     background: white;
 }
