@@ -12,6 +12,7 @@ $(window).on("load", function(){
         
         imgArr[1].src = "https://source.unsplash.com/random/7680x4320?img=1";
         imgArr[1].onload = function() {
+            img_sel(1)
             console.log("1 ready")
             imgArr[2].src = "https://source.unsplash.com/random/7680x4320?img=2";
             imgArr[2].onload = function() {
@@ -19,7 +20,6 @@ $(window).on("load", function(){
                 imgArr[3].src = "https://source.unsplash.com/random/7680x4320?img=3";
                 imgArr[3].onload = function() {
                     console.log("3 ready")
-                    img_sel(1)
                     hide()
                 }
             }
