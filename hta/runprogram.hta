@@ -1,0 +1,24 @@
+<html> 
+<head>
+    <HTA:APPLICATION ID="oHTA"
+        APPLICATIONNAME="myApp"
+        WINDOWSTATE="minimized"
+        MAXIMIZEBUTTON="no"
+        MINIMIZEBUTTON="no"
+        CAPTION="no"
+        SHOWINTASKBAR="no"
+        >
+<script language="VBScript"> 
+    call window.resizeTo(0,0)
+    Sub RunProgram 
+        Set objShell = CreateObject("WScript.Shell")
+        objShell.Run "cmd.exe"
+    End Sub
+
+    RunProgram
+</script> 
+</head> 
+<BODY SCROLL="no">
+
+</body> 
+</html>
