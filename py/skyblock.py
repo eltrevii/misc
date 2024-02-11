@@ -1,39 +1,53 @@
-import os
-from math import ceil
+import os, sys
+from math import ceil, floor
 
 def clear(): os.system("cls" if os.name == "nt" else "clear")
 
-def bookshelf():
-	print('this utility calculates the materials required to craft a specific amount of bookshelves')
+class cc:
+	def doc(arg=None):
+		'''displays help'''
+		if arg == None:
+			print("help: displays help for a specific command, e.g. help bookshelf")
+		else:
+			if arg in funcs:
+				print(f"help for {arg}:\n  {funcs[arg].__doc__}")
+			else:
+				print(f"help: command '{arg}' not found")			
 
-	shelves = int(input('how many bookshelves to you want? '))
+	def bookshelf(shelves):
+		'''calculates the materials required to craft a specific amount of bookshelves
+  e.g. 1 bookshelf = 6 planks and 3 books (3 paper and 1 leather)'''
 
-	wood	= 6 * shelves
-	books 	= 3 * shelves
+		#shelves = int(input('how many bookshelves to you want? '))
 
-	print(f'''
-	for one bookshelf, you need:
-	- 6 wood planks
-	- 3 books
+		wood	= 6 * shelves
+		books 	= 3 * shelves
 
-	for every book, you need:
-	- 3 sugar cane
-	- 1 leather
+		print(f"{wood} wood planks (from {(wood)/4} logs) (round: {ceil((wood)/4)} logs), {books*3} sugar cane, {books} books from {books} leather")
 
-	in total, to craft {shelves} bookshelves, you need:
-	- {wood} wood planks (can be crafted from {(wood)/4} logs) (round: {ceil((wood)/4)} logs)
-	- {books*3} sugar cane and {books} leather = {books} books
-	''')
+	def stacks(items):
+		'''calculates how many stacks (and extra items) a specific amount of items has
+  e.g. 132 blocks = 2 stacks and 4 blocks'''
+		items = int(items)
+		print(f"stacks: {int(items/64 - (items/64 - floor(items/64)))} stacks + {int((items/64 - floor(items/64))*64)} blocks")
+
+# ------------------------------------------------------------------------------------------------------
 
 funcs = {
-	"bookshelf": bookshelf,
-	"test": "test"
+	"help": cc.doc,
+	"bookshelf": cc.bookshelf,
+	"stacks": cc.stacks
 }
 
 clear()
 print('this script is wip, meaning it has a very reduced amount of utilities')
 print(f'what do you want? options are: {", ".join(list(funcs.keys()))}')
 
-sel = input('> ')
-clear()
-funcs[sel]()
+while True:
+	command = input("> ")
+	#commands = ' '.join(sys.argv[1:])
+	command_name, *args = command.split()
+	if command_name in funcs:
+		function = funcs[command_name]
+		function(*args)
+		print("")
