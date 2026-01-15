@@ -8,8 +8,8 @@ def main(isDebug:bool=False)->None:
         ipInput = input("Formato de ejemplo: 192.168.12.22/16\nEspecifique Dirección IP con CIDR: ") or "203.0.113.18/27"
 
     inSplit = ipInput.split('/')
-    ipAddr =     inSplit[0]
-    ipCidr = int(inSplit[1])
+    ipAddr  =     inSplit[0]
+    ipCidr  = int(inSplit[1])
 
     maxCIDR = 32
     blankCidr = maxCIDR - ipCidr
@@ -31,47 +31,45 @@ def main(isDebug:bool=False)->None:
         return
 
     netMaskBin = ("1" * ipCidr) + ("0" * blankCidr)
-    maskSplitChunks, maskSplitChunkSize = len(netMaskBin), 8
+    
 
     ipSplits = [ int(i) for i in ipAddr.split(".") ]
 
     # https://stackoverflow.com/a/13673133
-    netMaskBinSplit = [ netMaskBin[i:i+maskSplitChunkSize] for i in range(0, maskSplitChunks, maskSplitChunkSize) ]
+    split_bytes = lambda x, c_chunks=None, c_size=8: [ x[i:i+c_size] for i in range(0, c_chunks or len(x), c_size) ]
 
-    netMaskDec = [ int(i, 2) for i in netMaskBinSplit ]
+    maskBinSplit = split_bytes(netMaskBin)
+    
+    netMaskDec = '.'.join([ str(int(i, 2)) for i in maskBinSplit ])
     results.append("Net mask (decimal): " + str(netMaskDec))
 
     ipBinFull = [ bin(i).replace('0b', '').rjust(8, "0") for i in ipSplits ]
 
     calc_netIp = []
     calc_broadIp = []
-    for a, b in zip(ipBinFull[maskAndSplit], netMaskBinSplit[maskAndSplit]):
+    for a, b in zip(ipBinFull, maskBinSplit):
         for a, b in zip(a, b):
-            curIpBit   = int(a)
-            curMaskBit = int(b)
-            print(curMaskBit, end='')
+            curIpBit      = int(a)
+            curMaskBit    = int(b)
+            curMaskInvert = (1 - curMaskBit) % 2
+            
             curNetIp = curIpBit and curMaskBit
             calc_netIp.append(str(curNetIp))
-            calc_broadIp.append(str(curNetIp or (1 - curMaskBit) % 2))
-    
-    netIpCopy = copy.deepcopy(ipSplits)
-    netIpCopy[maskAndSplit] = int(''.join(calc_netIp), 2)
-    results.append("Net IP: " + str(netIpCopy))
+            calc_broadIp.append(str(curNetIp or curMaskInvert))
 
-    # netIpBin = [ bin(i).replace('0b', '').rjust(8, "0") for i in netIpCopy ]
+    joinNetIp   = ''.join(calc_netIp)
+    joinBroadIp = ''.join(calc_broadIp)
 
-    # calc_broadIp = []
-    # for a, b in zip(netIpBin[maskAndSplit], netMaskBinSplit[maskAndSplit]):
-    #     for a, b in zip(a, b):
-    #         curIpBit   = int(a)
-    #         curMaskBit = int(b)
+    splitNetIp   = split_bytes(joinNetIp)
+    splitBroadIp = split_bytes(joinBroadIp)
 
-    #         calc_broadIp.append(str(curIpBit or curMaskBit))
+    newNetIp   = '.'.join([ str(int(i, 2)) for i in splitNetIp ])
+    newBroadIp = '.'.join([ str(int(i, 2)) for i in splitBroadIp ])
 
-    newBroadIp = copy.deepcopy(ipSplits)
-    newBroadIp[maskAndSplit] = int(''.join(calc_broadIp), 2)
-
-    results.append("Broadcast IP: " + str(newBroadIp))
+    results.extend([
+        "Net IP: "       + str(newNetIp),
+        "Broadcast IP: " + str(newBroadIp)
+    ])
 
     print(results)
 
