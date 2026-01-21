@@ -3,8 +3,8 @@ import sys
 # LAMBDA FUNCTIONS
 ##################
 # ONLY next line: https://stackoverflow.com/a/13673133
-    split_bytes = lambda x, c_chunks=None, c_size=8: [ x[i:i+c_size] for i in range(0, c_chunks or len(x), c_size) ]
-    binFloodToDots = lambda x: '.'.join([ str(int(i, 2)) for i in x ])
+split_bytes = lambda x, c_chunks=None, c_size=8: [ x[i:i+c_size] for i in range(0, c_chunks or len(x), c_size) ]
+binFloodToDots = lambda x: '.'.join([ str(int(i, 2)) for i in x ])
 
 def main(isDebug:bool=False)->None:
     try:    ipInput = sys.argv[1]
