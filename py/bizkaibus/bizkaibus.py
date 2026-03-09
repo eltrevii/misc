@@ -1,7 +1,6 @@
 import requests
 import re
 import json
-import sys
 from argparse import ArgumentParser
 from pathlib import Path
 from rich import print as rprint
