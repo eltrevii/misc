@@ -9,7 +9,7 @@ from rich.prompt import IntPrompt
 
 own_path = Path(__file__).resolve()
 
-munic_filepath = (own_path.parent / "municipalities.json")
+munic_filepath = (own_path.parent / "data/municipalities.json")
 all_munic = json.loads(munic_filepath.read_text(encoding="utf-8"))
 
 rprint("[green]BIZKAIBUS STOP TOOL [yellow]-[/yellow] by [cyan]eltrevii")
