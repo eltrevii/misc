@@ -1,27 +1,23 @@
+_dbg = False
 
 def dbgPrint(pText: str, end: str = '\n') -> None:
-    try:
-        _dbg
-    except NameError:
-        return
-    print(pText, end=end)
+    if _dbg:
+        print(pText, end=end)
 
 def main():
     print("")
     print("INTRODUCE UN NUMERO")
-    num1: str = input("> ")
-    num2: str = input("> ")
+    num1 = input("> ")
+    num2 = input("> ")
 
     num1 = num1[::-1]
     num2 = num2[::-1]
 
     lSums = []
-    fIdx = 0
     iCarry = 0
-    for i, items in enumerate(zip(num1, num2)):
+    for items in zip(num1, num2):
         iSum = int(items[0]) + int(items[1])
         dbgPrint(f"{items[0]} + {items[1]} ", end="")
-        lCarries = []
         match iSum:
             case 0: # 0 + 0
                 sToAppend = ['0' if (iCarry == 0) else '1'][0]
@@ -42,7 +38,7 @@ def main():
                 dbgPrint(f"+ {iCarry} = {sToAppend}, carry 1")
                 lSums.append(sToAppend)
                 iCarry = 1
-    
+
     if iCarry == 1:
         lSums.append('1')
  

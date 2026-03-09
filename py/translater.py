@@ -1,5 +1,8 @@
 import requests as re, json as js, os
 
+def clear():
+    os.system("cls") if os.name == "nt" else os.system("clear")
+
 def main():
 	nttext = []
 	tftext = ""
@@ -54,8 +57,6 @@ def main():
 	print(f"texto traducido: {tftext}")
 	print(f"texto original : {js.loads(otstr)['translatedText']}")
 	print("\nadvertencia: el texto original traducido podria no ser 100% preciso")
-
-def clear(): os.system("cls") if os.name == "nt" else os.system("clear")
 
 if __name__ == '__main__':
 	main()

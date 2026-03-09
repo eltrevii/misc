@@ -1,7 +1,8 @@
 import os, sys
 from math import ceil, floor
 
-def clear(): os.system("cls" if os.name == "nt" else "clear")
+def clear():
+    os.system("cls" if os.name == "nt" else "clear")
 
 class cc:
 	def doc(arg=None):
@@ -18,12 +19,12 @@ class cc:
 		'''calculates the materials required to craft a specific amount of bookshelves
   e.g. 1 bookshelf = 6 planks and 3 books (3 paper and 1 leather)'''
 
-		#shelves = int(input('how many bookshelves to you want? '))
+		shelves = int(shelves)
 
 		wood	= 6 * shelves
 		books 	= 3 * shelves
 
-		print(f"{wood} wood planks (from {(wood)/4} logs) (round: {ceil((wood)/4)} logs), {books*3} sugar cane, {books} books from {books} leather")
+		print(f"{wood} wood planks (from {(wood)/4} logs / round: {ceil((wood)/4)} logs), {books*3} sugar cane, {books} books from {books} leather")
 
 	def stacks(items):
 		'''calculates how many stacks (and extra items) a specific amount of items has
@@ -33,10 +34,14 @@ class cc:
 
 # ------------------------------------------------------------------------------------------------------
 
+def exit():
+	raise SystemExit
+
 funcs = {
 	"help": cc.doc,
 	"bookshelf": cc.bookshelf,
-	"stacks": cc.stacks
+	"stacks": cc.stacks,
+	"exit": exit,
 }
 
 clear()

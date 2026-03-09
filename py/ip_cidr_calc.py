@@ -1,12 +1,14 @@
 import sys
 
-# LAMBDA FUNCTIONS
-##################
-# ONLY next line: https://stackoverflow.com/a/13673133
-split_bytes = lambda x, c_chunks=None, c_size=8: [ x[i:i+c_size] for i in range(0, c_chunks or len(x), c_size) ]
-binFloodToDots = lambda x: '.'.join([ str(int(i, 2)) for i in x ])
+def split_bytes(x, c_chunks=None, c_size=8):
+    """Splits a string into chunks (normally of 8 parts, for strings representing binary bytes)"""
+    # https://stackoverflow.com/a/13673133
+    return [ x[i:i+c_size] for i in range(0, c_chunks or len(x), c_size) ]
+def binFloodToDots(x):
+    """Converts a split of binary numbers as strings into a dot-separated decimal number string like '192.168.1.12'"""
+    return '.'.join([ str(int(i, 2)) for i in x ])
 
-def main(isDebug:bool=False)->None:
+def main():
     try:    ipInput = sys.argv[1]
     except: ipInput = input("Formato de ejemplo: 192.168.12.22/16\nEspecifique Dirección IP con CIDR: ")
 
