@@ -4,24 +4,25 @@ import copy
 import pandas as pd
 
 # LAMBDA FUNCTIONS
-split_bytes = lambda x, c_chunks=None, c_size=8: [ x[i:i+c_size] for i in range(0, c_chunks or len(x), c_size) ]
-binFloodToDots = lambda x: '.'.join([ str(int(i, 2)) for i in x ])
+def split_bytes(x, c_chunks=None, c_size=8):
+    return [ x[i:i+c_size] for i in range(0, c_chunks or len(x), c_size) ]
+def binFloodToDots(x):
+    return '.'.join([ str(int(i, 2)) for i in x ])
 
-def getIpSplits() -> list:
+def generateIpSplits() -> list:
     newIpSegments  = []
     ipFirstSegment = random.randint(10, 200)
     newIpSegments.append(ipFirstSegment)
     for i in range(3):
         otherIpSegments = random.randint(0, 255)
         newIpSegments.append(otherIpSegments)
-    #finalIp = '.'.join(newIpSegments)
     return newIpSegments
 
 def getMaskFromCidr(pCidr, pBlankCidr) -> tuple[str, list, str]:
     newMaskBin = "1" * pCidr + "0" * pBlankCidr
     maskBinSplit = split_bytes(newMaskBin)
     maskDecFinal = binFloodToDots(maskBinSplit)
-    return newMaskBin, maskBinSplit, maskDecFinal
+    return maskBinSplit, maskDecFinal
 
 def getNetAndBroadIp(pMaskBinSplit, pIpSplits):
     ipBinFull = [ bin(curIpChunk).replace('0b', '').zfill(8) for curIpChunk in pIpSplits ]
@@ -83,14 +84,14 @@ def main(isDebug:bool=False)->None:
 
     for i in range(ipAmount):
         # IP Address
-        newIpSplits = getIpSplits()
+        newIpSplits = generateIpSplits()
         exerciseIp = '.'.join([str(curIpChunk) for curIpChunk in newIpSplits])
         # CIDR
         newCidr      = random.randint(4, 31)
         blankCidr    = 32 - newCidr
         exerciseCidr = "/" + str(newCidr)
         # Subnet mask
-        maskBin, maskSplitBin, exerciseMask = getMaskFromCidr(newCidr, blankCidr)
+        maskSplitBin, exerciseMask = getMaskFromCidr(newCidr, blankCidr)
         # Net, Broadcast, Min and Max IP
         exerciseNetIp, exerciseBroadIp, exerciseMinIp, exerciseMaxIp = getNetAndBroadIp(maskSplitBin, newIpSplits)
         # Hosts #
