@@ -18,7 +18,7 @@ print()
 api_baseurl = 'http://apli.bizkaia.net/APPS/DANOK/TQWS/TQ.ASMX/'
 
 def mp(patname):
-    """Returns regex pattern from html tag name as in: <tag>(.*)</tag>"""
+    """Returns regex pattern from html tag name as in: <tag>(.*?)</tag>"""
     return f"<{patname}>(.*?)</{patname}>"
 
 def cmd_browse(args):
