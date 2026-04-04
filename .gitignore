@@ -1,3 +1,7 @@
 # vim files
 *~
 *.swp
+
+# pyinstaller
+**/build/
+**/dist/

@@ -2,9 +2,6 @@
 DESCRIPTION
     this script generates a command line to scan for open ports,
     depending on the ip address and port to scan
-
-REQUIREMENTS
-    rich
 '''
 
 ##################################################
@@ -50,20 +47,32 @@ class _GetchWindows:
 getch = _Getch()
 ##################################################
 
+from argparse import ArgumentParser
+
+parser = ArgumentParser()
+subp = parser.add_subparsers()
+sp_data = subp.add_parser("with", help="Used to specify the IP address and port via arguments")
+sp_data.add_argument("ip_address", default=None)
+sp_data.add_argument("port", default=None)
+
+args = parser.parse_args()
+
 from rich import print as rprint
 from rich.prompt import Prompt
 
 import os
 
-debug = True
+debug = False
 
-def clear(): os.system("cls") if os.name == "nt" else os.system("clear")
+def clear():
+    os.system("cls" if os.name == "nt" else "clear")
 
 def dbgPrint(*args, **kwargs):
-    if debug == True:
+    if debug:
         print("[dim]", *args, **kwargs)
 
-noEndPrint = lambda msg: rprint(msg, end='', flush=True)
+def noEndPrint(msg):
+    rprint(msg, end='', flush=True)
 
 def yesNo(msg):
     noEndPrint("[yellow]msg (y/n) [dim]\\[y]: ")
@@ -79,10 +88,23 @@ def yesNo(msg):
             case _:
                 dbgPrint("pressed key " + ynAns)
 
+def data_prompt(args):
+    rprint("[blue]ENTER RANGE (like 192.168.1.0/24 or 192.168.1.*)")
+    ipRange = Prompt.ask("[yellow]RANGE")
+    ipRangeSplit = ipRange.split(":")
+    if len(ipRangeSplit) < 2:
+        ipPort  = Prompt.ask("[yellow]PORT ")
+    else:
+        ipRange = ipRangeSplit[0]
+        ipPort  = ipRangeSplit[1]
+
+def data_args(args):
+
+
 def main():
     clear()
     rprint("[blue]ENTER RANGE (like 192.168.1.0/24 or 192.168.1.*)")
-    ipRange = Prompt.ask("[yellow]RANGE")
+    ipRange = args.ip_address + ":" + args.port or Prompt.ask("[yellow]RANGE")
     ipRangeSplit = ipRange.split(":")
     if len(ipRangeSplit) < 2:
         ipPort  = Prompt.ask("[yellow]PORT ")
