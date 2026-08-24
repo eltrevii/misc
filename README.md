@@ -1,10 +1,4 @@
-[a](#1)
+# misc
 
-a (#1)
-
-a ( #1 ) 
-
-a #1
-
-sus #16
-
+Monorepo for very small projects I have for casual tinkering.
+  Most or all of these projects are abandoned or receive very little maintenance.
