@@ -2,15 +2,16 @@ import copy
 import random
 
 def split_bytes(str x, int c_chunks=0, int c_size=8):
-    cdef char* bytelist[4] # list of strings like ["11111111", "00000000", "11111111", "00000000"]
+    cdef char[8] bytelist[4] # list of strings like ["11111111", "00000000", "11111111", "00000000"]
     l = [ x[i:i+c_size] for i in range(0, c_chunks or len(x), c_size) ]
     return l
 
 def binFloodToDots(list x) -> str: # '192.168.1.1'
     return '.'.join([ str(int(i, 2)) for i in x ])
 
-def getMaskFromCidr(int pCidr, int pBlankCidr) -> tuple(list[str], str):
-    cdef str newMaskBin   = "1" * pCidr + "0" * pBlankCidr
+def getMaskFromCidr(int pCidr, int maxCidr) -> tuple(list[str], str):
+    cdef int blankCidr = maxCidr - pCidr
+    cdef str newMaskBin = "1" * pCidr + "0" * blankCidr
     cdef list[str] maskBinSplit = split_bytes(newMaskBin)
     cdef str maskDecFinal = binFloodToDots(maskBinSplit)
     return maskBinSplit, maskDecFinal
@@ -70,20 +71,15 @@ def getNetAndBroadIp(list[str] pMaskBinSplit, list[int] pIpSplits):
 
     return newNetIp, newBroadIp, newMinIp, newMaxIp
 
-def generateCidr(max_cidr=32) -> tuple(int, int):
-    cdef int newCidr = random.randint(4, 31)
-    cdef int blankCidr = max_cidr - newCidr
-
-    return (newCidr, blankCidr)
+def generateCidr(max_cidr=32) -> int:
+    return random.randint(4, max_cidr - 1)
 
 def generateIpSplits() -> list[int]:
     cdef int ipFirstSeg = random.randint(10, 200)
     cdef list[int] newIpSegments = [ipFirstSeg]
-    cdef int curIpSegment
 
     for i in range(3):
-        curIpSegment = random.randint(0, 255)
-        newIpSegments.append(curIpSegment)
+        newIpSegments.append(random.randint(0, 255))
 
     return newIpSegments
 
@@ -91,7 +87,6 @@ def add_selective(dict[str, list[str]] full_dict, dict[str, list[str]] part_dict
     cdef list[str] key_names = list(full_dict.keys())
     cdef tuple cur_row
     cdef list[str] random_pattern
-    #cdef str cur_key, cur_val, cur_pattern
     for cur_row in zip(*full_dict.values()):
         random_pattern = list(random.choice(patterns))
         for cur_key, cur_val, cur_pattern in zip(key_names, cur_row, random_pattern):
@@ -101,19 +96,21 @@ def add_selective(dict[str, list[str]] full_dict, dict[str, list[str]] part_dict
                 part_dict[cur_key].append("")
 
 def genExercise() -> tuple(str):
+    cdef int maxCidr = 32
+
     # IP Address
     cdef list[int] newIpSplits = generateIpSplits()
     cdef str exIp = ".".join(str(x) for x in newIpSplits)
 
     # CIDR
-    cdef int newCidr, blankCidr
-    newCidr, blankCidr = generateCidr()
+    cdef int newCidr = generateCidr()
+    cdef int blankCidr = maxCidr - newCidr
     cdef str exCidr = '/' + str(newCidr)
 
     # Subnet mask
     cdef list[str] maskSplitBin
     cdef str exMask
-    maskSplitBin, exMask = getMaskFromCidr(newCidr, blankCidr)
+    maskSplitBin, exMask = getMaskFromCidr(newCidr, maxCidr)
 
     # Net, Broadcast, Min and Max IP
     cdef str exNetIp, exBroadIp, exMinIp, exMaxIp
@@ -122,7 +119,7 @@ def genExercise() -> tuple(str):
     # Host number
     cdef str exMaxHosts = str((2**blankCidr) - 2)
 
-    if newCidr >= 31:
+    if newCidr >= (maxCidr - 1):
         exMinIp = exMaxIp = "[Sin IP utilizables]"
         exMaxHosts = "0 [CIDR /31]"
 

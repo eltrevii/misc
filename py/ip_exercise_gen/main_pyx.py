@@ -19,31 +19,27 @@ SELECTIVE_KEEP_PATTERNS = [
     "00101000",
 ]
 
+# BEGIN column solution https://stackoverflow.com/a/73320573
+def get_max_len(series):
+    return max(
+        series.astype(str).map(len).max(), # len of largest item
+        len(str(series.name)),             # len of header
+    ) + 1
 
-# https://stackoverflow.com/a/73320573
-def export_excel(df: pd.Dataframe, sheet_name: str, file_path_out: str):
-    workbook = Workbook(file_path_out)
-    worksheet = workbook.add_worksheet(sheet_name)
+def export_excel(dframes: dict[pd.Dataframe], file_path_out: str):
+    with pd.ExcelWriter(file_path_out, engine='xlsxwriter') as writer:
+        for sheet_name, frame in dframes.items():
+            df = pd.DataFrame(frame)
+            df.to_excel(writer, sheet_name=sheet_name, index=False)
 
-    worksheet.write_row(0, 0, [col for col in df.columns])
+            workbook = writer.book
+            worksheet = writer.sheets[sheet_name]
 
-    for index, row in df.iterrows():
-        worksheet.write_row(index + 1, 0, [col for col in row])
-    for idx, col in enumerate(df):
-        series = df[col]
-        max_len = (
-            max(
-                (
-                    series.astype(str).map(len).max(),  # len of largest item
-                    len(str(series.name)),  # len of header
-                )
-            )
-            + 1
-        )
-        worksheet.set_column(idx, idx, max_len)
-
-    workbook.close()
-
+            for idx, col in enumerate(df):
+                series = df[col]
+                max_len = get_max_len(series)
+                worksheet.set_column(idx, idx, max_len)
+# END column solution
 
 def main():
     try:
@@ -73,7 +69,7 @@ def main():
     ip.add_selective(dExerciseFullData, dExercisePartData, SELECTIVE_KEEP_PATTERNS)
 
     all_dataframes = {
-        "Ejercicios IP EN BLANCO": dExercisePartData,
+        "Ejercicios IP EN BLANCO":  dExercisePartData,
         "Ejercicios IP CORREGIDOS": dExerciseFullData,
     }
 
@@ -82,23 +78,7 @@ def main():
     end_time = time.perf_counter()
     print(f"FINISHED IN {end_time - start_time}")
 
-    # https://stackoverflow.com/a/40535454
-    # with pd.ExcelWriter(file_name, engine='xlsxwriter') as pdWriter:
-    #    for cur_sheet_name, cur_df in all_dataframes.items():
-    #        df_current = pd.DataFrame(cur_df)
-    #        df_current.to_excel(pdWriter, sheet_name=cur_sheet_name, index=False)
-    #        gotWorksheet = pdWriter.sheets[cur_sheet_name]
-    #        for idx, col in enumerate(df_current):
-    #            series = df_current[col]
-    #            max_len = max((
-    #            series.astype(str).map(len).max(), # len of largest item
-    #            len(str(series.name)),             # len of header
-    #            )) + 1
-    #            gotWorksheet.set_column(idx, idx, max_len)
-
-    for cur_sheet_name, cur_df in all_dataframes.items():
-        df_current = pd.DataFrame(cur_df)
-        export_excel(df_current, cur_sheet_name, file_name)
+    export_excel(all_dataframes, file_name)
 
     end_write = time.perf_counter()
     print(f"WRITE IN {end_write - end_time}")
